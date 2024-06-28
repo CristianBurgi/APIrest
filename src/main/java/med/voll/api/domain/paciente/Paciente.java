@@ -121,4 +121,8 @@ public class Paciente {
         }
 
     }
+
+    public void desactivarPaciente() {
+        this.activo = false;
+    }
 }

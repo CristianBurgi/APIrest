@@ -1,6 +1,8 @@
 package med.voll.api.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.direccion.DatosDireccion;
@@ -21,6 +23,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/pacientes")
+@SecurityRequirement(name = "bearer-key")
 public class PacienteController {
 
     @Autowired
@@ -64,5 +67,13 @@ public class PacienteController {
                         paciente.getDireccion().getNumero(),
                         paciente.getDireccion().getComplemento())));
 
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity eliminarPaciente(@PathVariable Long id) {
+        Paciente paciente = pacienteRepository.getReferenceById(id);
+        paciente.desactivarPaciente();
+        return ResponseEntity.noContent().build();
     }
 }

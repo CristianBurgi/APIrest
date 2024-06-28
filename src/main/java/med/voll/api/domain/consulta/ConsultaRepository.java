@@ -1,5 +1,6 @@
 package med.voll.api.domain.consulta;
 
+import aj.org.objectweb.asm.commons.Remapper;
 import med.voll.api.domain.medico.Medico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,9 @@ import java.time.LocalDateTime;
 public interface ConsultaRepository extends JpaRepository<Consulta,Long> {
 
 
-    Object existsByPacienteIdAndDataBetween(Long aLong, LocalDateTime primerHorario, LocalDateTime ultimoHorario);
+    Boolean existsByPacienteIdAndDataBetween(Long aLong, LocalDateTime primerHorario, LocalDateTime ultimoHorario);
 
-    Object existsByMedicoIdAndData(Long aLong, LocalDateTime fecha);
+    Boolean existsByMedicoIdAndData(Long aLong, LocalDateTime fecha);
+
+    Page<Consulta> findByActivoTrue(Pageable paginacion);
 }

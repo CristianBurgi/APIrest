@@ -27,8 +27,9 @@ public class SecurityConfiguration {
         return http.csrf(c->c.disable())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/login")
-                .permitAll()
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .requestMatchers("/swagger-ui.html", "/login").permitAll()
+                .requestMatchers("/swagger-ui.html", "/v3/api-docs/**","/swagger-ui/**").permitAll()//agrego las urls de openApi spring doc
                 .anyRequest()
                 .authenticated()
                 .and()

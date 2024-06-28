@@ -30,8 +30,10 @@ public class Consulta {
     private Paciente paciente;
 
     private LocalDateTime data;
+    private Boolean activo;
 
-    public Consulta(Object o, Medico medico, Paciente paciente, LocalDateTime fecha) {
+    public Consulta(Object o, Medico medico, Paciente paciente, LocalDateTime fecha, Boolean activo) {
+        this.activo= true;
     }
 
 
@@ -41,4 +43,36 @@ public class Consulta {
 //        this.paciente = paciente;
 //        this.data = data;
    // }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public Medico getMedico() {
+        return this.medico;
+    }
+
+    public void setMedico(final Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return this.paciente;
+    }
+
+    public void setPaciente(final Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public LocalDateTime getData() {
+        return this.data;
+    }
+
+    public void setData(final LocalDateTime data) {
+        this.data = data;
+    }
 }

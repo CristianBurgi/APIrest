@@ -15,7 +15,7 @@ public interface MedicoRepository  extends JpaRepository<Medico,Long> {
 
     //Primer cambio en Intellij
     @Query(value = """
-            select * from Medico m
+            select m from Medico m
             Where m.activo = true 
             and
             m.especialidad = :especialidad 
