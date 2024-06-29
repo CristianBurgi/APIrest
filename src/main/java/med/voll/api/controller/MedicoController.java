@@ -2,6 +2,7 @@ package med.voll.api.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.direccion.DatosDireccion;
@@ -21,11 +22,13 @@ import java.net.URI;
 @RestController
 @RequestMapping("/medicos")
 @SecurityRequirement(name = "bearer-key")
+@Tag(name = "Medicos", description = "Operaciones relacionadas con Medicos")
 public class MedicoController {
     @Autowired
     private MedicoRepository medicoRepository;
 
     @PostMapping
+    @Operation(summary = "Registrar", description = "Registra un Medico")
     public ResponseEntity<DatosRespuestaMedico> registrarMedico(@RequestBody @Valid DatosRegistroMedico datosRegistroMedico,
                                                                 UriComponentsBuilder uriComponentsBuilder) {
         Medico medico = medicoRepository.save(new Medico(datosRegistroMedico));
@@ -70,6 +73,7 @@ public class MedicoController {
 
 
     @GetMapping
+    @Operation(summary = "Obtener lista de Medicos", description = "Devuelve una lista de todos los Medicos registrados")
     public ResponseEntity<Page<DatosListadoMedico>> listadoMedicos(@PageableDefault(size = 15) Pageable paginacion) {
         //return medicoRepository.findAll(paginacion).map(DatosListadoMedico::new);
         return ResponseEntity.ok( medicoRepository.findByActivoTrue(paginacion).map(DatosListadoMedico::new));
@@ -79,6 +83,7 @@ public class MedicoController {
 
     @PutMapping
     @Transactional
+    @Operation(summary = "Actualiza", description = "Actualiza un Medico registrado")
     public ResponseEntity<DatosRespuestaMedico> actualizarMedico(@RequestBody @Valid DatosActualizarMedico datosActualizarMedico) {
         Medico medico = medicoRepository.getReferenceById(datosActualizarMedico.id());
         medico.actualizarDatos(datosActualizarMedico);
@@ -96,6 +101,7 @@ public class MedicoController {
     //DELETE LÓGICO
     @DeleteMapping("/{id}")
     @Transactional
+    @Operation(summary = "Eliminar por ID", description = "Elimina un Medico pasandolo un id")
     public ResponseEntity eliminarMedico(@PathVariable Long id) {
         Medico medico = medicoRepository.getReferenceById(id);
         medico.desactivarMedico();
